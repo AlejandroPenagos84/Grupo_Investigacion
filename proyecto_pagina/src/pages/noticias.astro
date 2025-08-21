@@ -1,0 +1,35 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Card from "@/components/Card.astro";
+
+type NewsEntry = CollectionEntry<"news">;
+
+const news = await getCollection("news");
+
+news.sort(
+    (a: NewsEntry, b: NewsEntry ) =>
+        b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<BaseLayout>
+    <div class="flex flex-col justify-center items-center mt-10">
+        <div>
+            <h1 class="mx-auto text-2xl md:text-3xl font-bold text-center">
+                Noticias
+            </h1>
+        </div>
+        <hr class="mx-auto w-3/4 h-1 mt-3 mb-5 border-0" />
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 w-3/4 justify-center gap-1.5"
+        >
+            {
+                news.map((newItem) => {
+                    const { data } = newItem;
+                    return <Card {...data} folderPath="news_images"/>;
+                })
+            }
+        </div>
+    </div>
+</BaseLayout>
