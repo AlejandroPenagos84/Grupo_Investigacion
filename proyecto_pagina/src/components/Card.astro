@@ -17,10 +17,13 @@ function getImagesFromFolder(folder: string) {
     'portfolio_images': import.meta.glob<{ default: ImageMetadata }>(
       `/src/assets/portfolio_images/*.{jpeg,jpg,png,gif}`,
     ),
-  }
-  
+    'quienes_images': import.meta.glob<{ default: ImageMetadata }>(
+      `/src/assets/quienes_images/*.{jpeg,jpg,png,gif}`,
+    ),
+  };
   return imageCollections[folder] || imageCollections['projects_images'];
 }
+
 
 const images = getImagesFromFolder(folderPath || 'projects_images');
 
